@@ -5,7 +5,7 @@ options:
     botPrefix: "."
     icon: "https://cdn.discordapp.com/attachments/751307555929849897/758751439253667850/Image-about-black-in-Weed-Art-by-amyjames-on-We-Heart-It.jpg"
     guild: 748228098625110057
-    bot_Token: "secret_bot_code_here"
+    bot_Token: "NzU4NzQxMDI1MzQxNzAyMTg0.X2zWpQ.blXBBp78imG4imzwKo_uRtQIcb4"
 
 on skript load:
     login to {@bot_Token} with name "YWF"
@@ -289,7 +289,8 @@ discord command quote [<text>]:
             reply with "*""%arg-1%""%nl%~ %event-member%*"
 
 on guild message received seen by "YWF":
-    if content of event-message contains "Hey", "Hello", "Hai" or "Hallo":
+    if content of event-message is "Hey", "Hello", "heya", "Hai" or "Hallo":
         reply with "Hello there %mention tag of event-member%! :wave:"
-    if content of event-message contains "Duck":
-        reply with "Quack! :duck:"
+    if content of event-message contains "Welcome":
+        reply with "Welcome, stranger! Have a nice stay, and stay safe.%nl%%mention tag of event-user%, I hope they brought some pizza for us." and store it in {welcome}
+        add reactions "weedLeaf", "high" and "pizza" to reactions of {welcome}
