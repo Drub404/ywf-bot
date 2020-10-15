@@ -4,6 +4,6 @@ options:
     botPrefix: ";"
 
 on skript load:
-    login to "NzY1OTg0NzA3NDg5NDMxNjEy.X4cw2Q.CXR5F1D4ES7xO9MnSbBJcm6cwpQ" with name "TripSitter"
+    login to "secret_bot_token_here" with name "TripSitter"
     set status of "TripSitter" to online
     mark "TripSitter" as watching {@default}
