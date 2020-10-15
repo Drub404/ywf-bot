@@ -5,6 +5,7 @@ options:
     botPrefix: "."
     icon: "https://cdn.discordapp.com/attachments/751307555929849897/758751439253667850/Image-about-black-in-Weed-Art-by-amyjames-on-We-Heart-It.jpg"
     guild: 748228098625110057
+    bot_Token: "secret_bot_code_here"
 
 on skript load:
     login to {@bot_Token} with name "YWF"
@@ -19,14 +20,14 @@ discord command help [<text>]:
                 set color of embed to pink
                 set title of the embed to "YWF - Help Panel"
                 add field named "General Help" with value ":bookmark_tabs: Enter ``.help general`` for general help." to embed
-                if event-member has role named "Moderator":
+                if event-member has role named "Staff":
                     add field named "Moderation help" with value ":bookmark_tabs: Enter ``.help moderation`` for moderation help." to embed
                 else:
                     add field named ":lock: Moderation help" with value "This panel is locked for you." to embed
-                if event-member has role named "*":
-                    add field named "Administrator help" with value ":bookmark_tabs: Enter ``.help admin`` for administrator help." to embed
+                if event-member has role named "Creator":
+                    add field named "Developer help" with value ":bookmark_tabs: Enter ``.help admin`` for development help." to embed
                 else:
-                    add field named ":lock: Administrator help" with value "This panel is locked for you." to embed
+                    add field named ":lock: Developer help" with value "This panel is locked for you." to embed
                 reply with last made embed
         else if arg-1 is "general", "g" or "gen":
             make embed:
@@ -35,13 +36,10 @@ discord command help [<text>]:
                 set description of the embed to "*Refrain from using bot commands in ##general or any text channel except ##bot-commands.*"
                 add field named ".quote (text)" with value "Share that dank quote!" to embed
                 add field named ".frag" with value "Defines the term 'fragging' / 'fragmenting'." to embed
-                add field named ".points" with value "Shows the point count of a member." to embed
-#                add field named ".mods" with value "Displays the current moderators online." to embed
-#                add field named ".sitters" with value "Displays the current trip sitters online." to embed
                 set footer of embed to footer with text "Have any questions? Ask our moderators! (.mods)" and icon {@icon}
                 reply with last made embed
         else if arg-1 is "moderation", "moderator", "mod" or "m":
-            if event-member has role named "Moderator":
+            if event-member has role named "Staff":
                 make embed:
                     set color of embed to purple
                     set title of the embed to ":lock: Moderator Commands"
@@ -57,13 +55,19 @@ discord command help [<text>]:
                     add field named "?purge bots" with value "Delete messages sent by bots." to embed
                     add field named "?purge (count) (member)" with value "Purges a certain message count sent by the given member." to embed
                     add field named "?purge invites (count)" with value "Purges a certain message count containing link invites." to embed
-                    set the footer of embed to footer with text "Still got questions? Ask in ##mod-help! (.mods)" and icon {@icon}
+                    set the footer of embed to footer with text "Still got questions? Ask our staff!" and icon {@icon}
                     reply with last made embed
-        else if arg-1 is "admin", "a", "*" or "owner":
-            if event-member has role named "*":
+            else:
+                make embed:
+                    set color of embed to red
+                    set title of the embed to "Oops, we ran into an error."
+                    set description of the embed to "You don't appear to have the `Staff` role!"
+                    reply with last made embed
+        else if arg-1 is "d", "dev", "developer", "owner", "c" or "creator":
+            if event-member has role named "Creator":
                 make embed:
                     set color of embed to purple
-                    set title of the embed to ":closed_lock_with_key: Administrator Commands"
+                    set title of the embed to ":closed_lock_with_key: Developer Commands"
                     set description of the embed to "*Hey you, if you aren't supposed to see this. Don't even try executing these commands..*"
                     add field named ".wm" with value "Sends the welcome embed for testing purposes." to embed
                     add field named ".rm" with value "Removes the mod role for testing purposes." to embed
@@ -74,7 +78,7 @@ discord command help [<text>]:
                 make embed:
                     set color of embed to red
                     set title of the embed to "Oops, we ran into an error."
-                    set description of the embed to "You don't appear to have the `*` role!"
+                    set description of the embed to "You don't appear to have the `Creator` role!"
                     reply with last made embed
         else:
             make embed:
@@ -83,35 +87,11 @@ discord command help [<text>]:
                 set description of the embed to "Please re-check your spelling or this command doesn't exist."
                 reply with last made embed
 
-#discord command moderators:
-#    aliases: mods
-#    prefixes: {@botPrefix}
-#    trigger:
-#        loop discord members of event-guild:
-#            loop-member has role named "Moderators"
-#            add loop-member to {_online Mods::*}
-#        size of {_online Mods::*} is 0:
-#            reply with "> :x: No moderators currently online!"
-#        else:
-#            reply with "> :notepad_spiral: **Online moderators:** %{_online Mods::*}%"
-
-#discord command tripsitter:
-#    aliases: sitters
-#    prefixes: {@botPrefix}
-#    trigger:
-#        loop discord members of event-guild:
-#            loop-member has role named "🚑 Trip Sitter"
-#            add loop-member to {_online Sitters::*}
-#        size of {_online Sitters::*} is 0:
-#            reply with "> :x: No trip sitters currently online!"
-#        else:
-#            reply with "> :ambulance: **Online trip sitters:** %{_online Sitters::*}%"
-
 discord command rules [<member>]:
     prefixes: {@botPrefix}
     trigger:
         if arg-1 is set:
-            if event-member has role named "Moderator":
+            if event-member has role named "Staff":
                 make embed:
                     set color of embed to green
                     set title of the embed to "-ꦼ~~———~~▸ **Young, Wild and Free's Rules:** :bookmark:"
@@ -138,7 +118,7 @@ discord command rules [<member>]:
                 make embed:
                     set color of embed to red
                     set title of the embed to "Oops, we ran into an error."
-                    set description of the embed to "You don't appear to have the `Moderator` role!"
+                    set description of the embed to "You don't appear to have the `Staff` role!"
                 reply with the last made embed and store the message in {_answer}
                 wait 10 seconds
                 delete random message out of {_answer} with event-bot
@@ -157,7 +137,7 @@ discord command faq [<member>]:
     prefixes: {@botPrefix}
     trigger:
         if arg-1 is set:
-            if event-member has role named "Moderator":
+            if event-member has role named "Staff":
                 make embed:
                     set color of embed to green
                     set title of the embed to "-ꦼ~~———~~▸ **Young, Wild and Free's FAQ:** :books:"
@@ -183,7 +163,7 @@ discord command faq [<member>]:
                 make embed:
                     set color of embed to red
                     set title of the embed to "Oops, we ran into an error."
-                    set description of the embed to "You don't appear to have the `Moderator` role!"
+                    set description of the embed to "You don't appear to have the `Staff` role!"
                 reply with the last made embed and store the message in {_answer}
                 wait 10 seconds
                 delete random message out of {_answer} with event-bot
@@ -198,23 +178,10 @@ discord command faq [<member>]:
             wait 10 seconds
             delete random message out of {_answer} with event-bot
 
-discord command points [<member>]:
-    aliases: p 
-    prefixes: {@botPrefix}
-    trigger:
-        if {ywfPoints::%event-member%} is not set:
-            reply with "You don't have any points."
-        else if arg-1 isn't set:
-            reply with "You have %{ywfPoints::%event-member%}% points."
-        else if {ywfPoints::%arg-1%} is not set:
-            reply with "%arg-1% doesn't have any points."
-        else:
-            reply with "%arg-1% has %{ywfPoints::%arg-1%}% points."
-
 discord command wm:
     prefixes: {@botPrefix}
     trigger:
-        if event-member has role named "*":
+        if event-member has role named "Creator":
             make embed:
                 set color of embed to purple
                 set title of the embed to "Welcome to __Young, Wild and Free__!"
@@ -225,13 +192,13 @@ discord command wm:
             make embed:
                 set color of embed to red
                 set title of the embed to "Oops, we ran into an error."
-                set description of the embed to "You don't appear to have the `*` role!"
+                set description of the embed to "You don't appear to have the `Creator` role!"
                 reply with last made embed       
 
 discord command rm:
     prefixes: {@botPrefix}
     trigger:
-        if event-member has role named "*":
+        if event-member has role named "Creator":
             remove role with id "748248140519440554" from roles of event-member
             reply with ":x: Removed the `@Moderator` role from %event-member%."
         else:
@@ -240,7 +207,7 @@ discord command rm:
             make embed:
                 set color of embed to red
                 set title of the embed to "Oops, we ran into an error."
-                set description of the embed to "You don't appear to have the `*` role!"
+                set description of the embed to "You don't appear to have the `Creator` role!"
             reply with the last made embed and store the message in {_answer}
             wait 5 seconds
             delete random message out of {_answer} with event-bot
@@ -248,7 +215,7 @@ discord command rm:
 discord command am:
     prefixes: {@botPrefix}
     trigger:
-        if event-member has role named "*":
+        if event-member has role named "Creator":
             add role with id "748248140519440554" to roles of event-member
             reply with ":white_check_mark: Added the `@Moderator` role to %event-member%."
         else:
@@ -257,17 +224,25 @@ discord command am:
             make embed:
                 set color of embed to red
                 set title of the embed to "Oops, we ran into an error."
-                set description of the embed to "You don't appear to have the `*` role!"
+                set description of the embed to "You don't appear to have the `Creator` role!"
             reply with the last made embed and store the message in {_answer}
             wait 5 seconds
             delete random message out of {_answer} with event-bot
 
-discord commad say [<text>]:
+discord command say [<text>]:
     prefixes: {@botPrefix}
     trigger:
-        if event-member has role named "*":
+        if event-member has role named "Creator":
             if arg-1 isn't set:
+                make embed:
+                    set color of embed to red
+                    set title of the embed to "Oops, we ran into an error."
+                    set description of the embed to "You forgot to add an argument!"
+                reply with the last made embed and store the message in {_answer}
+                wait 5 seconds
+                delete random message out of {_answer} with event-bot
             else:
+                delete event-message
                 reply with "%arg-1%"
         else:    
             grab the last 1 messages in event-channel
@@ -275,7 +250,7 @@ discord commad say [<text>]:
             make embed:
                 set color of embed to red
                 set title of the embed to "Oops, we ran into an error."
-                set description of the embed to "You don't appear to have the `*` role!"
+                set description of the embed to "You don't appear to have the `Creator` role!"
             reply with the last made embed and store the message in {_answer}
             wait 5 seconds
             delete random message out of {_answer} with event-bot
@@ -285,7 +260,7 @@ discord command frag:
     trigger:
         make embed:
             set color of embed to pink
-            set title of the embed to "Fragmenting is intentionally shortening your messages so you can increase your message count."
+            set title of the embed to "Fragmenting is intentionally shortening your messages so you can increase your xp count."
             set the footer of embed to footer with text "Fragmenting is seen as ""spam"" and will get you muted" and icon {@icon}
         reply with last made embed
 
@@ -299,7 +274,7 @@ discord command quote [<text>]:
                 set description of the embed to "Please specify something that you would like me to quote."
                 set the footer of embed to footer with text "Advertising or tagging everyone/here is disabled!" and icon {@icon}
             reply with last made embed
-        else if event-member has role named "*":
+        else if event-member has role named "Creator":
             delete event-message
             reply with "*""%arg-1%""%nl%~ %event-member%*"
         else if arg-1 contains "@everyone", "@here", ".com", ".net", "join", "free" or "link":
@@ -313,16 +288,8 @@ discord command quote [<text>]:
             delete event-message
             reply with "*""%arg-1%""%nl%~ %event-member%*"
 
-on member join guild:
-    make embed:
-        set color of embed to purple
-        set title of the embed to "Welcome to __Young, Wild and Free__!"
-        set description of the embed to "Upon joining our server you're free to pick self assignable roles in (<##757650791954907309>) and read the rules and faq in (<##748266591078056037>) to avoid any future conflicts!"
-        set the footer of embed to footer with text "Have any questions? Ask our moderators! (.mods)" and icon {@icon}
-        set {_welcome} to the last made embed
-        send {_welcome} to event-member with event-bot
-
 on guild message received seen by "YWF":
-    if event-member has role named "Member":
-        chance of 35%:
-            add 1 to {ywfPoints::%event-member%}
+    if content of event-message contains "Hey", "Hello", "Hai" or "Hallo":
+        reply with "Hello there %mention tag of event-member%! :wave:"
+    if content of event-message contains "Duck":
+        reply with "Quack! :duck:"
