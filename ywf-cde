@@ -5,7 +5,7 @@ options:
     botPrefix: "."
     icon: "https://cdn.discordapp.com/attachments/751307555929849897/758751439253667850/Image-about-black-in-Weed-Art-by-amyjames-on-We-Heart-It.jpg"
     guild: 748228098625110057
-    bot_Token: "NzU4NzQxMDI1MzQxNzAyMTg0.X2zWpQ.blXBBp78imG4imzwKo_uRtQIcb4"
+    bot_Token: {BOT_TOKEN}
 
 on skript load:
     login to {@bot_Token} with name "YWF"
