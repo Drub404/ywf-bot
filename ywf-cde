@@ -5,12 +5,15 @@ options:
     botPrefix: "."
     icon: "https://cdn.discordapp.com/attachments/751307555929849897/758751439253667850/Image-about-black-in-Weed-Art-by-amyjames-on-We-Heart-It.jpg"
     guild: 748228098625110057
-    bot_Token: {BOT_TOKEN}
+    bot_Token: {@bot_prefix_here}
 
 on skript load:
-    login to {@bot_Token} with name "YWF"
-    set status of "YWF" to online
-    mark "YWF" as watching {@default}
+    create vixio bot:
+        enable the guild members intent
+        wait 1 second
+        login to {@bot_Token} with name "YWF"
+        set status of "YWF" to online
+        mark "YWF" as watching {@default}
 
 discord command help [<text>]:
     prefixes: {@botPrefix}
@@ -287,6 +290,27 @@ discord command quote [<text>]:
         else:
             delete event-message
             reply with "*""%arg-1%""%nl%~ %event-member%*"
+
+discord command tripsitter:
+    prefixes: {@botPrefix}
+    aliases: ts 
+    trigger:
+        loop discord members of event-guild:
+            loop-member has role named "Trip Sitter"
+            add loop-member to {_onlineTS::*} 
+        if size of {_onlineTS::*} is 0:
+            make embed:
+                set color of embed to red
+                set the colour of the embed to {_color}
+                set title of the embed to "We currently don't have any trip sitters. :("
+            reply with the last made embed
+        else:
+            make embed:
+                set {_color} to java color from rgb 255, 85, 85
+                set the colour of the embed to {_color}
+                set title of the embed to "We currently have %size of {_onlineTS::*}% trip sitters"
+                set description of the embed to "Our trip sitters: %{_onlineTS::*}%."
+            reply with the last made embed
 
 on guild message received seen by "YWF":
     if content of event-message is "Hey", "Hello", "heya", "Hai" or "Hallo":
