@@ -1,9 +1,0 @@
-options:
-    default: "you space out.."
-    bot: TripSitter
-    botPrefix: ";"
-
-on skript load:
-    login to "secret_bot_token_here" with name "TripSitter"
-    set status of "TripSitter" to online
-    mark "TripSitter" as watching {@default}
