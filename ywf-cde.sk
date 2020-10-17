@@ -142,12 +142,16 @@ discord command am:
 			wait 5 seconds
 			delete random message out of {_answer} with event-bot
 
-discord command rnb:
+discord command rnb [<member>]:
 	prefixes: {@botPrefix}
 	trigger:
 		if event-member has role named "Creator":
-			set {new_member.verified} to false
-			reply with "RNB has been executed successfully!"
+			if arg-1 is set:
+				set {%arg-1%.verified} to false
+				reply with "RNB has been executed successfully!"
+			else:
+				set {%event-user%.verified} to false
+				reply with "RNB has been executed successfully!"
 		else:
 			grab the last 1 messages in event-channel
 			purge the grabbed messages with event-bot
@@ -247,7 +251,7 @@ discord command staff:
 
 on private message received seen by "YWF":
 	if content of event-message contains ".verify-me":
-		if {new_member.verified} is false:
+		if {%event-user%.verified} is false:
 			reply with "You have been verified! Have a wonderful stay."
 			make embed:
 				set {_color} to java color from rgb 0, 98, 255
@@ -259,12 +263,13 @@ on private message received seen by "YWF":
 				set the timestamp of embed to now
 			send the last made embed to channel with id "748267056390078583" with event-bot
 			add role with id "748248450591621162" to roles of event-user in guild with id "748228098625110057"
-			set {new_member.verified} to true
-		else if {new_member.verified} is true:
+			set {%event-user%.verified} to true
+		else if {%event-user%.verified} is true:
 			reply with "You have already verified yourself."
 			stop
 
 on member join guild:
+	set {%event-user%.verified} to false
 	make embed:
 		set {_color} to java color from rgb 0, 98, 255
 		set the color of the embed to {_color}
@@ -272,8 +277,6 @@ on member join guild:
 		set description of the embed to "%nl%Hello! You are required to send the command below in here before entering the server.%nl%%nl%```yml%nl%.verify-me```%nl%**Why?**%nl%This is to protect our community against targeted attacks using automated user accounts."
 		set the footer of embed to footer with text "Having trouble? Send a DM to online staff!" and icon {@icon}
 	send the last made embed to event-member with event-bot
-	set {%event-member%.verified} to false
-	set {%event-member%.verified} to {new_member.verified}
 
 #on guild message received seen by "YWF":
 #    if content of event-message is "Hey", "Hello", "heya", "Hai" or "Hallo":
