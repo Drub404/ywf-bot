@@ -225,7 +225,6 @@ discord command tripsitters:
 		loop discord members of event-guild:
 			loop-member has role named "Trip Sitter"
 			add loop-member to {_onlineTS::*}
-		set {_onlineTS::*} to alphabetically sorted {_onlineTS::*}
 		make embed:
 			set {_color} to java color from rgb 255, 85, 85
 			set the colour of the embed to {_color}
@@ -239,7 +238,6 @@ discord command staff:
 		loop discord members of event-guild:
 			loop-member has role named "Staff"
 			add loop-member to {_onlineStaff::*}
-		set {_onlineStaff::*} to alphabetically sorted {_onlineStaff::*}
 		make embed:
 			set {_color} to java color from rgb 43.5, 66.3, 87.1
 			set the color of the embed to {_color}
@@ -277,9 +275,9 @@ on member join guild:
 	set {%event-member%.verified} to false
 	set {%event-member%.verified} to {new_member.verified}
 
-on guild message received seen by "YWF":
-    if content of event-message is "Hey", "Hello", "heya", "Hai" or "Hallo":
-        reply with "Hello there %mention tag of event-member%! :wave:"
-    if content of event-message contains "Welcome":
-        reply with "Welcome, stranger! Have a nice stay, and stay safe.%nl%%mention tag of event-user%, I hope they brought some pizza for us." and store it in {welcome}
-        add reactions "weedLeaf", "high" and "pizza" to reactions of {welcome}
+#on guild message received seen by "YWF":
+#    if content of event-message is "Hey", "Hello", "heya", "Hai" or "Hallo":
+#        reply with "Hello there %mention tag of event-member%! :wave:"
+#    if content of event-message contains "Welcome":
+#        reply with "Welcome, stranger! Have a nice stay, and stay safe.%nl%%mention tag of event-user%, I hope they brought some pizza for us." and store it in {welcome}
+#        add reactions "weedLeaf", "high" and "pizza" to reactions of {welcome}
