@@ -222,9 +222,16 @@ discord command quote [<text>]:
 			delete event-message
 			reply with "*""%arg-1%""%nl%~ %event-member%*"
 
+discord command coinflip:
+	prefixes: {@botPrefix}
+	aliases: cf
+	trigger:
+		set {_coinflip} to random element out of "The coin landed on **heads**!" and "The coin landed on **tails**!" and "I accidentally threw the coin into the water.. whoops."
+		reply with "%{_coinflip}%"
+
 discord command tripsitters:
 	prefixes: {@botPrefix}
-	aliases: ts
+	aliases: ts, tripsitter
 	trigger:
 		loop discord members of event-guild:
 			loop-member has role named "Trip Sitter"
@@ -238,7 +245,7 @@ discord command tripsitters:
 
 discord command staff:
 	prefixes: {@botPrefix}
-	aliases: mods, mod
+	aliases: mods, mod, moderator, moderators
 	trigger:
 		loop discord members of event-guild:
 			loop-member has role named "Staff"
