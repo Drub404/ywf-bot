@@ -250,19 +250,31 @@ discord command staff:
 			set description of the embed to ":hammer_pick: %{_onlineStaff::*}%"
 		reply with last made embed
 
+discord command .welcome:
+	trigger:
+		set {_welcomer} to mention tag of role named "Welcome"
+		set {_welcomeMessage} to random element out of "ONE OF US! ONE OF US! ONE OF US!" and "You didn't find YWF, YWF found you." and "It's not your fault.. IT'S NOT YOUR FAULT!!" and "You have finally made it to the mothership, we have been expecting you." and "Can you hum while holding your nose?" and "Did you know Mars' population entirely consists of robots?" and "Did you know that if a piece of paper were folded 42 times, it would reach to the moon?" and "Don't expect me to give out random shrooms, go pick them yourself!" and "APES! TOGETHER! STRONG!" and "These tabs ain't shit, oh wait.. holy shit!" and "Keep this server quiet for my rehab center, okay?" and "Plant shrooms instead of landmines!" and "You have arrived from a dimension that no longer exists."
+		reply with "%{_welcomer}% %mention tag of event-user%! %{_welcomeMessage}%"
+
 on private message received seen by "YWF":
 	if content of event-message contains ".verify-%{verifyNum.%event-user%}%":
 		if {%event-user%.verified} is false:
+			set {_welcomer} to mention tag of role named "Welcome" in guild with id "748228098625110057"
+
+			set {_welcomeMessage} to random element out of "ONE OF US! ONE OF US! ONE OF US!" and "You didn't find YWF, YWF found you." and "It's not your fault.. IT'S NOT YOUR FAULT!!" and "You have finally made it to the mothership, we have been expecting you." and "Can you hum while holding your nose?" and "Did you know Mars' population entirely consists of robots?" and "Did you know that if a piece of paper were folded 42 times, it would reach to the moon?" and "Don't expect me to give out random shrooms, go pick them yourself!" and "APES! TOGETHER! STRONG!" and "These tabs ain't shit, oh wait.. holy shit!" and "Keep this server quiet for my rehab center, okay?" and "Plant shrooms instead of landmines!" and "You have arrived from a dimension that no longer exists."
+			
 			reply with "Server entry granted. Have a wonderful stay!"
 			make embed:
 				set {_color} to java color from rgb 0, 98, 255
 				set the color of the embed to {_color}
 				set title of the embed to "Verification Complete"
-				add field named "**User**" with value "%event-user%%discriminator of event-user%" to embed
+				add field named "**User**" with value "%event-user%##%discriminator of event-user%" to embed
 				add field named "**Command**" with value ".verify-%{verifyNum.%event-user%}%" to embed
 				set the footer of embed to footer with text "" and icon {@icon}
 				set the timestamp of embed to now
 			send the last made embed to channel with id "748267056390078583" with event-bot
+
+			send "%{_welcomer}% %event-user%, %{_welcomeMessage}%" to channel with id "748228098625110060" with event-bot
 			add role with id "748248450591621162" to roles of event-user in guild with id "748228098625110057"
 			set {%event-user%.verified} to true
 			stop
@@ -280,6 +292,7 @@ on member join guild:
 		set description of the embed to "%nl%Hello! You are required to send the command below in here before entering the server.%nl%%nl%```yml%nl%.verify-%{verifyNum.%event-user%}%```%nl%**Why?**%nl%This is to protect our community against targeted attacks using automated user accounts."
 		set the footer of embed to footer with text "Having trouble? Send a DM to online staff!" and icon {@icon}
 	send the last made embed to event-member with event-bot
+
 
 #on guild message received seen by "YWF":
 #    if content of event-message is "Hey", "Hello", "heya", "Hai" or "Hallo":
