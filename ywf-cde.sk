@@ -292,11 +292,3 @@ on member join guild:
 		set description of the embed to "%nl%Hello! You are required to send the command below in here before entering the server.%nl%%nl%```yml%nl%.verify-%{verifyNum.%event-user%}%```%nl%**Why?**%nl%This is to protect our community against targeted attacks using automated user accounts."
 		set the footer of embed to footer with text "Having trouble? Send a DM to online staff!" and icon {@icon}
 	send the last made embed to event-member with event-bot
-
-
-#on guild message received seen by "YWF":
-#    if content of event-message is "Hey", "Hello", "heya", "Hai" or "Hallo":
-#        reply with "Hello there %mention tag of event-member%! :wave:"
-#    if content of event-message contains "Welcome":
-#        reply with "Welcome, stranger! Have a nice stay, and stay safe.%nl%%mention tag of event-user%, I hope they brought some pizza for us." and store it in {welcome}
-#        add reactions "weedLeaf", "high" and "pizza" to reactions of {welcome}
