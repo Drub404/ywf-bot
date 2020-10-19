@@ -12,7 +12,7 @@ on skript load:
 		enable the guild members intent
 		wait 1 second
 		login to {@botToken} with name "YWF"
-		set status of "YWF" to do not disturb
+		set status of "YWF" to online
 		mark "YWF" as watching {@default}
 
 discord command help [<text>]:
@@ -23,7 +23,7 @@ discord command help [<text>]:
 				set color of embed to pink
 				set title of the embed to "YWF - Help Panel"
 				add field named "General Help" with value ":bookmark_tabs: Enter ``.help general`` for general help." to embed
-				if event-member has role named "Staff":
+				if event-member has role named "Mod":
 					add field named "Moderation help" with value ":bookmark_tabs: Enter ``.help moderation`` for moderation help." to embed
 				else:
 					add field named ":lock: Moderation help" with value "This panel is locked for you." to embed
@@ -44,7 +44,7 @@ discord command help [<text>]:
 				set footer of embed to footer with text "Have any questions? Ask our moderators! (.staff)" and icon {@icon}
 				reply with last made embed
 		else if arg-1 is "moderation", "moderator", "mod" or "m":
-			if event-member has role named "Staff":
+			if event-member has role named "Mod":
 				make embed:
 					set color of embed to purple
 					set title of the embed to ":lock: Moderator Commands"
@@ -64,7 +64,7 @@ discord command help [<text>]:
 				make embed:
 					set color of embed to red
 					set title of the embed to "Oops, we ran into an error."
-					set description of the embed to "You don't appear to have the `Staff` role!"
+					set description of the embed to "You don't appear to have the `Mod` role!"
 					reply with last made embed
 		else if arg-1 is "d", "dev", "developer", "owner", "c" or "creator":
 			if event-member has role named "Creator":
@@ -248,7 +248,7 @@ discord command staff:
 	aliases: mods, mod, moderator, moderators
 	trigger:
 		loop discord members of event-guild:
-			loop-member has role named "Staff"
+			loop-member has role named "Mod"
 			add loop-member to {_onlineStaff::*}
 		make embed:
 			set {_color} to java color from rgb 43.5, 66.3, 87.1
