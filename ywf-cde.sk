@@ -36,11 +36,13 @@ discord command help [<text>]:
 			make embed:
 				set color of embed to purple
 				set title of the embed to ":page_with_curl: General Commands"
-				set description of the embed to "*Refrain from using bot commands in general or any text channel except bot-commands.*"
-				add field named ".quote (text)" with value "Share that dank quote!" to embed
-				add field named ".frag" with value "Defines the term 'fragging' / 'fragmenting'." to embed
-				add field named ".tripsitters" with value "Check out all our trip sitters." to embed
-				add field named ".staff" with value "View our list of staff members." to embed
+				set description of the embed to "*Refrain from using bot commands in <##748228098625110060> or any text channel except <##748252225691844665>.*"
+				add split field named ".quote (text)" with value "Share that dank quote with everyone!" to embed
+				add field named ".frag" with value "What exactly is fragging?" to embed
+				add split field named ".tripsitters" with value "A list of our trip sitters." to embed
+				add split field named ".staff" with value "Who exactly is a moderator in this community?" to embed
+				add split field named ".invite" with value "Sends an invite to this community." to embed
+				set the thumbnail of embed to "https://cdn.discordapp.com/emojis/769120865295007804.png?v=1"
 				set footer of embed to footer with text "Have any questions? Ask our moderators! (.staff)" and icon {@icon}
 				reply with last made embed
 		else if arg-1 is "moderation", "moderator", "mod" or "m":
@@ -49,15 +51,16 @@ discord command help [<text>]:
 					set color of embed to purple
 					set title of the embed to ":lock: Moderator Commands"
 					set description of the embed to "*Hey you, if you aren't supposed to see this. Don't even try executing these commands..*"
-					add field named "?warn (member) (reason)" with value "Warns the given member for the given reason." to embed
-					add field named "?kick (member) (reason)" with value "Kicks the given member for the given reason." to embed
-					add field named "?mute (member) (lenght) (reason)" with value "Mutes the given member lasting the given time for the given reason." to embed
-					add field named "?ban (member) (lenght) (reason)" with value "Bans the given member lasting the given time for the given reason." to embed
-					add field named "?purge (count)" with value "Purges a certain message count in the current channel." to embed
-					add field named "?purge (member)" with value "Delete messages for a member in the channel." to embed
-					add field named "?purge bots" with value "Delete messages sent by bots." to embed
-					add field named "?purge (count) (member)" with value "Purges a certain message count sent by the given member." to embed
-					add field named "?purge invites (count)" with value "Purges a certain message count containing link invites." to embed
+					add split field named "?warn (member) (reason)" with value "Warns the given member for the given reason." to embed
+					add split field named "?kick (member) (reason)" with value "Kicks the given member for the given reason." to embed
+					add split field named "?mute (member) (lenght) (reason)" with value "Mutes the given member lasting the given time for the given reason." to embed
+					add split field named "?ban (member) (lenght) (reason)" with value "Bans the given member lasting the given time for the given reason." to embed
+					add split field named "?purge (count)" with value "Purges a certain message count in the current channel." to embed
+					add split field named "?purge (member)" with value "Delete messages for a member in the channel." to embed
+					add split field named "?purge bots" with value "Delete messages sent by bots." to embed
+					add split field named "?purge (count) (member)" with value "Purges a certain message count sent by the given member." to embed
+					add split field named "?purge invites (count)" with value "Purges a certain message count containing link invites." to embed
+					set the thumbnail of embed to "https://cdn.discordapp.com/emojis/769120865295007804.png?v=1"
 					set the footer of embed to footer with text "Still got questions? Ask our staff!" and icon {@icon}
 					reply with last made embed
 			else:
@@ -74,9 +77,10 @@ discord command help [<text>]:
 					set description of the embed to "*Hey you, if you aren't supposed to see this. Don't even try executing these commands..*"
 					add field named ".wm" with value "Sends the welcome embed for testing purposes." to embed
 					add field named ".rm" with value "Removes the mod role for testing purposes." to embed
-					add field named ".am" with value "Adds the mod role for testing purposes." to embed
-					add field named ".rnb" with value "Sets the boolean new.member_verification to false in order to test some features." to embed
-					add field named ".say" with value "Literally copies your argument." to embed
+					add split field named ".am" with value "Adds the mod role for testing purposes." to embed
+					add split field named ".rnb" with value "Sets the boolean new.member_verification to false in order to test some features." to embed
+					add split field named ".say" with value "Literally copies your argument." to embed
+					set the thumbnail of embed to "https://cdn.discordapp.com/emojis/769120865295007804.png?v=1"
 					reply with last made embed
 			else:
 				make embed:
@@ -188,6 +192,13 @@ discord command say [<text>]:
 			reply with the last made embed and store the message in {_answer}
 			wait 5 seconds
 			delete random message out of {_answer} with event-bot
+
+discord command invite:
+	prefixes: {@botPrefix}
+	aliases: inv
+	trigger:
+		reply with "discord.gg/s2GH5W4"
+		stop
 
 discord command frag:
 	prefixes: {@botPrefix}
