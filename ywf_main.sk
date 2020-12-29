@@ -1,9 +1,11 @@
+#GENERAL SECTION
+
 options:
-	default: "these beautiful people! :)"
+	default: ".help ~"
 	guild: "Young, Wild and Free!"
 	bot: "YoungWildFree"
 	botPrefix: "."
-	icon: "https://cdn.discordapp.com/attachments/762037941051981861/766988284370092042/ywf_moshed_gif_logo.gif"
+	icon: "https://cdn.discordapp.com/attachments/751307555929849897/793491957011578890/MOSHED-2020-11-16-17-0-42.gif"
 	guild: 748228098625110057
 
 on skript load:
@@ -14,17 +16,74 @@ on skript load:
 		set status of "YoungWildFree" to online
 		mark "YoungWildFree" as watching {@default}
 
+discord command help [<text>]:
+	prefixes: {@botPrefix}
+	trigger:
+		if arg-1 isn't set:
+			make embed:
+				set color of embed to purple
+				set title of the embed to "Help is on the way!"
+				add field named "General help" with value "Enter ``.help general`` for general help." to embed
+				add field named "Economy help" with value "Enter ``.help economy`` for economy help." to embed
+				add field named "Misc help" with value "Enter ``.help misc`` for misc help." to embed
+				set the footer of embed to footer with text "Created by Cat for YWF" and icon "https://cdn.discordapp.com/emojis/766214097821106207.gif?v=1"
+				set the timestamp of embed to now
+				reply with the last made embed
+		else if arg-1 is "general" or "general help":
+			make embed:
+				set color of embed to purple
+				set title of the embed to "General Help"
+#				add field named "Suggestions" with value "To post a suggestion execute `.suggest [suggestions]`" to embed
+#				add field named "F.A.Q" with value "Are you looking for an answer to your question? Try looking in `.faq`" to embed
+				add field named "Message count" with value "Curious how many messages you've sent so far? `.messages`" to embed
+				add field named "Fragmenting" with value "What is fragmenting? Could it get me punished?! `.frag`" to embed
+				add field named "Invite Link" with value "Re-call the official invite link with `.invite`" to embed
+				add field named "Trip Sitters" with value "Check our trip sitting team with `.ts`" to embed
+				add field named "Mods" with value "Check our moderation team with `.mods`" to embed
+#				add field named "Info" with value "Let us take a closer look at someone.. `.info @mention`" to embed
+#				add field named "Bug report" with value "Report a bot-bug to Cat with `.bug [text]`" to embed
+				set the footer of embed to footer with text "Created by Cat for YWF" and icon "https://cdn.discordapp.com/emojis/766214097821106207.gif?v=1"
+				set the timestamp of embed to now
+				reply with the last made embed
+		else if arg-1 is "misc" or "misc help":
+			make embed:
+				set color of embed to purple
+				set title of the embed to "Miscellaneous Help"
+#				add field named "Avatar" with value "Get the link and picture of someone's avatar with `.avatar @mention`." to embed
+#				add field named "Say" with value "Let the bot say something you want with `.say [text]`." to embed
+				add field named "uWot & Shrug" with value "Using the commands `.uwot` and `.shrug` will output something mysterious" to embed
+				add field named "Coinflip" with value "Will you throw heads or tails? Find out with `.coinflip`" to embed
+				add field named "Quote" with value "Quote a message with `.quote (message)`" to embed
+#				add field named "Penis" with value "Are you curious on how long your e-Penis is? Find out with `.penis @mention`." to embed
+#				add field named "Hug" with value "Hug someone through a gif! `.hug @mention`." to embed
+#				add field named "8ball" with value "Ask something to the bot with `.8ball [question]`." to embed
+				set the footer of embed to footer with text "Created by Cat for YWF" and icon "https://cdn.discordapp.com/emojis/766214097821106207.gif?v=1"
+				set the timestamp of embed to now
+				reply with the last made embed
+		else if arg-1 is "economy" or "economy help":
+			make embed:
+				set color of embed to purple
+				set title of the embed to "Economy Help"
+				add field named "Points" with value "How many points do you and others have? `.points [member]`" to embed
+				add field named "Work" with value "Oh? Are you broke? Then f***ing work! `.work`" to embed
+				add field named "Daily" with value "Claim your daily point-package here. `.daily`" to embed
+				add field named "Gambling" with value "Risk it or leave it.. `.gamble [a|b|c] [amount]`" to embed
+				add field named "Pay" with value "Pay an other member your points with `.pay @mention [amount]`" to embed
+				add field named "Rob" with value "Rob someone! Just don't get caught.. `.rob @mention`" to embed
+				add field named "Shop" with value "Enter the bot's shop to buy cool addons in the server. `.shop`" to embed
+				set the footer of embed to footer with text "Created by Cat for YWF" and icon "https://cdn.discordapp.com/emojis/766214097821106207.gif?v=1"
+				set the timestamp of embed to now
+				reply with the last made embed
+
+#VERIFICATION SECTION
+
 discord command mverify [<member>]:
 	prefixes: {@botPrefix}
 	aliases: mv 
 	trigger:
 		if event-member has role named "Mod":
 			if arg-1 doesn't have role named "Member":
-			#OPTIONS
-#				set {_welcomer} to mention tag of role named "Welcome" in guild with id "748228098625110057"
 				set {_welcomeMessage} to "Be sure to get some <##757650791954907309> and get familiar with our <##748266591078056037>.%nl%To navigate through the community, check out <##748266550967926794>!"
-
-			#CODE
 				set {%arg-1%.verifiedBOT} to true
 				delete {verifyNumBOT.%arg-1%}
 				add role with id "748248450591621162" to roles of arg-1
@@ -36,7 +95,7 @@ discord command mverify [<member>]:
 					add field named "**User**" with value "%arg-1%##%discriminator of arg-1%" to embed
 					add field named "**User ID**" with value "%discord id of arg-1%" to embed
 					add field named "**Verification**" with value "Verified by %mention tag of event-member%" to embed
-					set the footer of embed to footer with text ""
+					set the footer of embed to footer with text "Created by Cat for YWF" and icon {@icon}
 					set the thumbnail of embed to "https://cdn.discordapp.com/attachments/751307555929849897/769601970809339904/verification_tick.gif"
 					set the timestamp of embed to now
 				send the last made embed to channel with id "748267056390078583" with event-bot
@@ -54,6 +113,365 @@ discord command mverify [<member>]:
 		else:
 			add reaction "x" to reactions of event-message
 
+#FUN COMMANDS
+
+discord command shrug:
+	prefixes: {@botPrefix}
+	trigger:
+		delete event-message
+		reply with "lol" and store it in {_shrug}
+		wait 2 seconds
+		edit {_shrug} to show "¯\_(ツ)_/¯"
+
+discord command uwot:
+	prefixes: {@botPrefix}
+	trigger:
+		delete event-message
+		reply with "https://tenor.com/o938.gif"
+
+discord command invite:
+	prefixes: {@botPrefix}
+	aliases: inv
+	trigger:
+		reply with "discord.gg/s2GH5W4"
+
+discord command frag:
+	prefixes: {@botPrefix}
+	trigger:
+		make embed:
+			set color of embed to pink
+			set title of the embed to "Fragmenting is intentionally shortening your messages so you can increase your xp count."
+			set the footer of embed to footer with text "Fragmenting is seen as ""spam"" and will get you muted" and icon {@icon}
+		reply with last made embed
+
+discord command quote [<text>]:
+	prefixes: {@botPrefix}
+	trigger:
+		if arg-1 isn't set:
+			make embed:
+				set color of embed to red
+				set title of the embed to "Oops, we ran into an error."
+				set description of the embed to "Please specify something that you would like me to quote."
+				set the footer of embed to footer with text "Advertising or tagging everyone/here is disabled!" and icon {@icon}
+			reply with last made embed
+		else if event-member has role named "Creator":
+			delete event-message
+			reply with "*""%arg-1%""%nl%~ %event-member%*"
+		else if arg-1 contains "@everyone", "@here", ".com", ".net", "join", "free" or "link":
+			delete event-message
+			make embed:
+				set color of embed to red
+				set title of the embed to "Oops, we ran into an error."
+				set description of the embed to "Please don't advertise or attempt to ping here or everyone through this command!"
+			reply with last made embed
+		else:
+			delete event-message
+			reply with "*""%arg-1%""%nl%~ %event-member%*"
+
+discord command coinflip:
+	prefixes: {@botPrefix}
+	aliases: cf
+	trigger:
+		set {_coinflip} to random element out of "The coin landed on **heads**!" and "The coin landed on **tails**!" and "I accidentally threw the coin into the water.. whoops."
+		reply with "%{_coinflip}%"
+
+discord command tripsitters:
+	prefixes: {@botPrefix}
+	aliases: ts, tripsitter
+	trigger:
+		loop discord members of event-guild:
+			loop-member has role named "Trip Sitter"
+			add loop-member to {_onlineTS::*}
+		make embed:
+			set {_color} to java color from rgb 255, 85, 85
+			set the colour of the embed to {_color}
+			set title of the embed to "%size of {_onlineTS::*}% trip sitters:"
+			set description of the embed to "%{_onlineTS::*}%"
+		reply with the last made embed
+
+discord command staff:
+	prefixes: {@botPrefix}
+	aliases: mods, mod, moderator, moderators
+	trigger:
+		loop discord members of event-guild:
+			loop-member has role named "Mod"
+			add loop-member to {_onlineStaff::*}
+		make embed:
+			set {_color} to java color from rgb 255, 85, 85
+			set the color of the embed to {_color}
+			set title of the embed to "%size of {_onlineStaff::*}% staff members:"
+			set description of the embed to "%{_onlineStaff::*}%"
+		reply with last made embed
+
+#ECONOMY SECTION
+
+discord command points [<member>]:
+	aliases: p
+	prefixes: {@botPrefix}
+	trigger:
+		if arg-1 is set:
+			make embed:
+				set color of embed to purple
+				if {YWF_Points_Count::%arg-1%} isn't set:
+					set description of the embed to "%arg-1% doesn't have any points."
+				else:
+					set description of the embed to "%arg-1% has %{YWF_Points_Count::%arg-1%}% points."
+				reply with the last made embed
+		else:
+			make embed:
+				set color of embed to purple
+				if {YWF_Points_Count::%event-member%} isn't set:
+					set description of the embed to "You don't have any points."
+				else:
+					set description of the embed to "You have %{YWF_Points_Count::%event-member%}% points."
+				reply with the last made embed
+
+discord command pay [<member>] [<integer>]:
+	aliases: send
+	prefixes: {@botPrefix}
+	trigger:
+		if arg-1 is set:
+			arg-1 is not event-member
+			if arg-2 is set:
+				if arg-2 > {YWF_Points_Count::%event-member%}:
+					add reaction "x" to reactions of event-message
+				else:
+					remove arg-2 from {YWF_Points_Count::%event-member%}
+					add arg-2 to {YWF_Points_Count::%arg-1%}
+					add reaction ":white_check_mark:" to event-message
+			else:
+				add reaction "x" to reactions of event-message
+
+discord command messages [<member>]:
+	prefixes: {@botPrefix}
+	aliases: m
+	trigger:
+		wait 1 second
+		if arg-1 is set:
+			if {YWF_Message_Count::%arg-1%} is not set:
+				make embed:
+					set color of embed to purple
+					set description of the embed to "%arg-1% has sent 0 messages so far. (I began counting since the 29th of December '20)"
+					reply with the last made embed
+			else:
+				make embed:
+					set color of embed to purple
+					set description of the embed to "%arg-1% has sent %{YWF_Message_Count::%arg-1%}% messages so far."
+					reply with the last made embed
+		else if arg-1 is not set:
+			if {YWF_Message_Count::%event-member%} is not set:
+				make embed:
+					set color of embed to purple
+					set description of the embed to "You have sent 0 messages so far. (I began counting since the 29th of December '20)"
+					reply with the last made embed
+			else:
+				make embed:
+					set color of embed to purple
+					set description of the embed to "You have sent %{YWF_Message_Count::%event-member%}% messages so far."
+					reply with the last made embed
+
+discord command work:
+	prefixes: {@botPrefix}
+	aliases: w
+	trigger:
+		set {_waited} to difference between {work.%event-member%.lastused} and now
+		if {_waited} is less than 1 hour:
+			reply with "You have to wait **%difference between 1 hour and {_waited}%** before you can work again!"
+			stop
+		else:
+			set {_work} to a random integer between 617 and 973
+			make embed:
+				set color of embed to purple
+				set description of the embed to "Your working effort got you %{_work}% points."
+				reply with the last made embed
+			add {_work} to {YWF_Points_Count::%event-member%}
+			set {work.%event-member%.lastused} to now
+
+discord command daily:
+	prefixes: {@botPrefix}
+	trigger:
+		set {_waitedDaily} to difference between {workDaily.%event-member%.lastused} and now
+		if {_waitedDaily} is less than 1 day:
+			reply with "You have to wait **%difference between 1 day and {_waitedDaily}%** before you can claim your daily points!"
+			stop
+		else:
+			set {_dailyPoints} to a random integer between 1637 and 2394
+			make embed:
+				set color of embed to purple
+				set description of the embed to "Your daily point-package got you %{_dailyPoints}% points."
+				reply with the last made embed
+			add {_dailyPoints} to {YWF_Points_Count::%event-member%}
+			set {workDaily.%event-member%.lastused} to now
+
+discord command rob [<member>]:
+	prefixes: {@botPrefix}
+	trigger:
+		set {_waitedRob} to difference between {rob.%event-member%.lastused} and now
+		if {_waitedRob} is less than 12 hours:
+			make embed:
+				set color of embed to purple
+				set title of the embed to "Oops, we ran into an error."
+				set description of the embed to "You have to wait %difference between 12 hours and {_waitedRob}% before you can rob someone."
+				reply with the last made embed
+		else if arg-1 isn't set:
+			make embed:
+				set color of embed to purple
+				set title of the embed to "Oops, we ran into an error."
+				set description of the embed to "In order to rob someone you will need to tag a member."
+				reply with the last made embed
+		else if arg-1 is event-member:
+			add reaction "x" to reactions of event-message
+		else if {YWF_Points_Count::%arg-1%} is less than 500:
+			make embed:
+				set color of embed to purple
+				set title of the embed to "Oops, we ran into an error."
+				set description of the embed to "You're only able to rob members with 500+ points."
+				reply with the last made embed
+		else if {YWF_Points_Count::%arg-1%} is greater than 500:
+			set {rob.%event-member%.lastused} to now
+			chance of 50%:
+				set {_calcRobbed} to {YWF_Points_Count::%arg-1%}
+				set {_robbedTotal} to {_calcRobbed} / 100 * 35
+				set {_robbedTotal} to round {_robbedTotal}
+				remove {_robbedTotal} from {YWF_Points_Count::%arg-1%}
+				add {_robbedTotal} to {YWF_Points_Count::%event-member%}
+				make embed:
+					set color of embed to purple
+					set title of the embed to "Success!"
+					set description of the embed to "You were able to rob %{_robbedTotal}% from %arg-1%.%nl%You now have %{YWF_Points_Count::%event-member%}% points."
+					reply with the last made embed
+			else:
+				set {_failPoints} to {YWF_Points_Count::%event-member%}
+				set {_finePay} to {_failPoints} / 100 * 40
+				set {_finePay} to round {_finePay}
+				remove {_finePay} from {YWF_Points_Count::%event-member%}
+				make embed:
+					set color of embed to purple
+					set title of the embed to "Oops.."
+					set description of the embed to "%arg-1% just saw you whenever you tried to rob them! Because of that you had to pay a fine of %{_finePay}% points."
+					reply with the last made embed
+
+discord command gamble [<text>] [<integer>]:
+	prefixes: {@botPrefix}
+	trigger:
+		if arg-1 and arg-2 is not set:
+			make embed:
+				set color of embed to purple
+				set title of the embed to "Oops, we ran into an error."
+				set description of the embed to "Command usage: `.gamble [a|b|c] [amount]` %nl% Type `.gamble help` for a full explanation on the gamble system."
+				set the footer of embed to footer with text ".gamble a 150 | .gamble b 500 | .gamble c 2500"
+				reply with the last made embed
+		else if arg-1 is "help":
+			make embed:
+				set color of embed to purple
+				set title of the embed to ":game_die: Gambling Help"
+				set description of the embed to "You're free to gamble at what level you feel comfortable with. We have 3 levels of gambling which all have their own pros and cons. You either choose to gamble on; `a`, `b` or `c`. A gives you a 45%% chance of winning, however if you win your amount only gets doubled. To where b has a 25%% chance of winning but your amount get trippled. And then c will give you a 15%% of winning but when you do, your amount gets quadrupled."
+				set the footer of embed to footer with text ".gamble a 150 | .gamble b 500 | .gamble c 2500"
+				reply with the last made embed
+		else if arg-1 isn't "a", "b" or "c":
+			make embed:
+				set color of embed to purple
+				set title of the embed to "Oops, we ran into an error."
+				set description of the embed to "You either need to gamble on 'a', 'b' or 'c'. %nl% *'a' Has a higher percentage of winning but it only doubles the amount. 'b' Triples your amount and 'c' quadruples.*"
+				set the footer of embed to footer with text ".gamble a 150 | .gamble b 500 | .gamble c 2500"
+				reply with the last made embed
+		else if arg-2 is not set:
+			make embed:
+				set color of embed to purple
+				set title of the embed to "Oops, we ran into an error."
+				set description of the embed to "Please enter an amount you'd like to gamble."
+				reply with the last made embed
+		else if arg-2 <= 0:
+			make embed:
+				set color of embed to purple
+				set title of the embed to "Oops, we ran into an error."
+				set description of the embed to "You can't gamble a negative amount or 0 points."
+				reply with the last made embed
+		else if {YWF_Points_Count::%event-member%} >= arg-2:
+			set {_gamble} to difference between {gamble.%event-member%.lastused} and now
+			if {_gamble} is less than 2 seconds:
+				make embed:
+					set color of embed to purple
+					set title of the embed to "Oops, we ran into an error."
+					set description of the embed to "You have to wait **%difference between 2 seconds and {_gamble}%** before you can gamble again!"
+					reply with the last made embed
+					stop
+			else if arg-1 is "a":
+				chance of 45%:
+					subtract arg-2 from {YWF_Points_Count::%event-member%}
+					add arg-2 to {YWF_Points_Count::%event-member%}
+					add arg-2 to {YWF_Points_Count::%event-member%}
+					reply with "You won! You now have %{YWF_Points_Count::%event-member%}% points."
+					set {gamble.%event-member%.lastused} to now
+					stop
+				else:
+					subtract arg-2 from {YWF_Points_Count::%event-member%}
+					reply with "You lost. You now have %{YWF_Points_Count::%event-member%}% points."
+					set {gamble.%event-member%.lastused} to now
+					stop
+			else if arg-1 is "b":
+				chance of 25%:
+					subtract arg-2 from {YWF_Points_Count::%event-member%}
+					add arg-2 to {YWF_Points_Count::%event-member%}
+					add arg-2 to {YWF_Points_Count::%event-member%}
+					add arg-2 to {YWF_Points_Count::%event-member%}
+					reply with "You won! You now have %{YWF_Points_Count::%event-member%}% points."
+					set {gamble.%event-member%.lastused} to now
+					stop
+				else:
+					subtract arg-2 from {YWF_Points_Count::%event-member%}
+					reply with "You lost. You now have %{YWF_Points_Count::%event-member%}% points."
+					set {gamble.%event-member%.lastused} to now
+					stop
+			else if arg-1 is "c":
+				chance of 15%:
+					subtract arg-2 from {YWF_Points_Count::%event-member%}
+					add arg-2 to {YWF_Points_Count::%event-member%}
+					add arg-2 to {YWF_Points_Count::%event-member%}
+					add arg-2 to {YWF_Points_Count::%event-member%}
+					add arg-2 to {YWF_Points_Count::%event-member%}
+					reply with "You won! You now have %{YWF_Points_Count::%event-member%}% points."
+					set {gamble.%event-member%.lastused} to now
+					stop
+				else:
+					subtract arg-2 from {YWF_Points_Count::%event-member%}
+					reply with "You lost. You now have %{YWF_Points_Count::%event-member%}% points."
+					set {gamble.%event-member%.lastused} to now
+					stop
+			else:
+				reply with "I don't recognize that one."
+		else:
+			reply with "You don't have that many points in your wallet!"
+
+discord command shop:
+	prefixes: {@botPrefix}
+	trigger:
+		make embed:
+			set color of embed to purple
+			set title of the embed to "Planet: Hangout's Shop"
+			set description of the embed to "Welcome to the Shop! Here you can use your points to buy stuff. To buy something from the shop you can do `.buy [item-name]`."
+			add field named "" with value "**Peasants** role - 10.500 points%nl%**Lower Class** role - 30.000 points%nl%**Middle Class** role - 40.500 points%nl%**Upper Class** role - 70.500 points%nl%**Wealthy** role - 100.000 points%nl%**Super Wealthy** role - 200.000 points%nl%**Royalty** role - 500.000 points%nl%**Millionaires** role - 1.000.000 points%nl%**Multi Millionaires** role - 2.500.000 points" to embed
+			set the footer of embed to footer with text "Note that you must have the class below the class you want in order to successfully buy it. For example, to purchase Middle Class, you must have Lower Class." and icon "https://cdn.discordapp.com/emojis/766214097821106207.gif?v=1"
+			reply with the last made embed
+
+discord command buy [<text>]:
+	prefixes: {@botPrefix}
+	trigger:
+		if arg-1 isn't set:
+			make embed:
+				set color of embed to purple
+				set title of the embed to "Oops, we ran into an error."
+				set description of the embed to "Apparently the shop hasn't opened yet, which means that you're not able to buy anything yet."
+				reply with the last made embed
+		else if arg-1 is set:
+			make embed:
+				set color of embed to purple
+				set title of the embed to "Oops, we ran into an error."
+				set description of the embed to "Apparently the shop hasn't opened yet, which means that you're not able to buy anything yet."
+				reply with the last made embed
+
+#EVENT SECTION
+
 on private message received seen by "YoungWildFree":
 	if event-user is user with id "550133256667004958":
 		reply with "You have been blacklisted from verifying."
@@ -64,9 +482,6 @@ on private message received seen by "YoungWildFree":
 		
 	else if content of event-message contains "%{verifyNumBOT.%event-user%}%":
 		if {ywf_main.%event-user%.verifiedBOT} is false:
-#			set {_welcomer} to mention tag of role named "Welcome" in guild with id "748228098625110057"
-
-			#set {_welcomeMessage} to random element out of "ONE OF US! ONE OF US! ONE OF US!" and "You didn't find Verification, Verification found you." and "It's not your fault.. IT'S NOT YOUR FAULT!!" and "You have finally made it to the mothership, we have been expecting you." and "Can you hum while holding your nose?" and "Did you know Mars' population entirely consists of robots?" and "Did you know that if a piece of paper were folded 42 times, it would reach to the moon?" and "Don't expect me to give out random shrooms, go pick them yourself!" and "APES! TOGETHER! STRONG!" and "These tabs ain't shit, oh wait.. holy shit!" and "Keep this server quiet for my rehab center, okay?" and "Plant shrooms instead of landmines!" and "You have arrived from a dimension that no longer exists."
 			set {_welcomeMessage} to "Be sure to get some <##757650791954907309> and get familiar with our <##748266591078056037>.%nl%To navigate through the community, check out <##748266550967926794>!"
 
 			make embed:
@@ -117,6 +532,11 @@ on member join guild:
 	send the last made embed to event-member with event-bot
 
 on guild message received seen by "YoungWildFree":
+	add 1 to {YWF_Message_Count::%event-member%}
+	if event-member has role named "Member":
+		chance of 35%:
+			add 1 to {YWF_Points_Count::%event-member%}
 	if event-channel is channel with id "765898422858678292":
 		wait 2 seconds
 		delete event-message
+		stop
