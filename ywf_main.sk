@@ -1,0 +1,123 @@
+options:
+	default: "these beautiful people! :)"
+	guild: "Young, Wild and Free!"
+	bot: "YoungWildFree"
+	botPrefix: "."
+	botToken: "NzkzMjE0MjQwNDM3NDM2NDU3.X-pAVA.7xmkOhg7ppvtZ5_vNVX__DrJou0"
+	icon: "https://cdn.discordapp.com/attachments/762037941051981861/766988284370092042/ywf_moshed_gif_logo.gif"
+	guild: 748228098625110057
+
+on skript load:
+	create vixio bot:
+		enable the guild members intent
+		wait 1 second
+		login to {@botToken} with name "YoungWildFree"
+		set status of "YoungWildFree" to online
+		mark "YoungWildFree" as watching {@default}
+
+discord command mverify [<member>]:
+	prefixes: {@botPrefix}
+	aliases: mv 
+	trigger:
+		if event-member has role named "Mod":
+			if arg-1 doesn't have role named "Member":
+			#OPTIONS
+#				set {_welcomer} to mention tag of role named "Welcome" in guild with id "748228098625110057"
+				set {_welcomeMessage} to "Be sure to get some <##757650791954907309> and get familiar with our <##748266591078056037>.%nl%To navigate through the community, check out <##748266550967926794>!"
+
+			#CODE
+				set {%arg-1%.verifiedBOT} to true
+				delete {verifyNumBOT.%arg-1%}
+				add role with id "748248450591621162" to roles of arg-1
+				send "Welcome, %mention tag of arg-1%! %{_welcomeMessage}%" to channel with id "777182444616286209" with event-bot
+				make embed:
+					set {_color} to java color from rgb 0, 98, 255
+					set the color of the embed to {_color}
+					set title of the embed to "Manual Verification Completed"
+					add field named "**User**" with value "%arg-1%##%discriminator of arg-1%" to embed
+					add field named "**User ID**" with value "%discord id of arg-1%" to embed
+					add field named "**Verification**" with value "Verified by %mention tag of event-member%" to embed
+					set the footer of embed to footer with text ""
+					set the thumbnail of embed to "https://cdn.discordapp.com/attachments/751307555929849897/769601970809339904/verification_tick.gif"
+					set the timestamp of embed to now
+				send the last made embed to channel with id "748267056390078583" with event-bot
+				create embed:
+					set {_color} to java color from rgb 0, 98, 255
+					set the color of the embed to {_color}
+					set title of the embed to "You have been verified!"
+					set the description of the embed to "One of our moderators (%mention tag of event-member%) has verified you manually into the server!%nl%%nl%**Why?**%nl%We sometimes do this on request if members have trouble verifiying or if the verification message had a time-out."
+					set the footer of embed to footer with text "Welcome to Young, Wild, and Free!"
+					set the thumbnail of embed to "https://cdn.discordapp.com/attachments/751307555929849897/769601970809339904/verification_tick.gif"
+				send the last made embed to arg-1 with event-bot
+
+			else:
+				add reaction "x" to reactions of event-message
+		else:
+			add reaction "x" to reactions of event-message
+
+on private message received seen by "YoungWildFree":
+	if event-user is user with id "550133256667004958":
+		reply with "You have been blacklisted from verifying."
+		delete {verifyNumBOT.%event-user%}
+	else if event-user is user with id "749697833136947231":
+		reply with "You have been blacklisted from verifying."
+		delete {verifyNumBOT.%event-user%}
+		
+	else if content of event-message contains "%{verifyNumBOT.%event-user%}%":
+		if {ywf_main.%event-user%.verifiedBOT} is false:
+#			set {_welcomer} to mention tag of role named "Welcome" in guild with id "748228098625110057"
+
+			#set {_welcomeMessage} to random element out of "ONE OF US! ONE OF US! ONE OF US!" and "You didn't find Verification, Verification found you." and "It's not your fault.. IT'S NOT YOUR FAULT!!" and "You have finally made it to the mothership, we have been expecting you." and "Can you hum while holding your nose?" and "Did you know Mars' population entirely consists of robots?" and "Did you know that if a piece of paper were folded 42 times, it would reach to the moon?" and "Don't expect me to give out random shrooms, go pick them yourself!" and "APES! TOGETHER! STRONG!" and "These tabs ain't shit, oh wait.. holy shit!" and "Keep this server quiet for my rehab center, okay?" and "Plant shrooms instead of landmines!" and "You have arrived from a dimension that no longer exists."
+			set {_welcomeMessage} to "Be sure to get some <##757650791954907309> and get familiar with our <##748266591078056037>.%nl%To navigate through the community, check out <##748266550967926794>!"
+
+			make embed:
+				set {_color} to java color from rgb 0, 98, 255
+				set the color of the embed to {_color}
+				set title of the embed to "Thank you!"
+				set description of the embed to "Server entry granted. Have a wonderful stay!"
+				set the thumbnail of embed to "https://cdn.discordapp.com/attachments/751307555929849897/769601970809339904/verification_tick.gif"
+				set the footer of embed to footer with text ""
+			reply with the last made embed
+			send "Welcome, %mention tag of event-user%! %{_welcomeMessage}%" to channel with id "777182444616286209" with event-bot
+			add role with id "748248450591621162" to roles of event-user in guild with id "748228098625110057"
+			set {ywf_main.%event-user%.verifiedBOT} to true
+			make embed:
+				set {_color} to java color from rgb 0, 98, 255
+				set the color of the embed to {_color}
+				set title of the embed to "Automatic Verification Completed"
+				add field named "**User**" with value "%event-user%##%discriminator of event-user%" to embed
+				add field named "**User ID**" with value "%discord id of event-user%" to embed
+				add field named "**Verification**" with value "%{verifyNumBOT.%event-user%}%" to embed
+				set the footer of embed to footer with text ""
+				set the thumbnail of embed to "https://cdn.discordapp.com/attachments/751307555929849897/769601970809339904/verification_tick.gif"
+				set the timestamp of embed to now
+			send the last made embed to channel with id "748267056390078583" with event-bot
+			delete {verifyNumBOT.%event-user%}
+			stop
+		else if {ywf_main.%event-user%.verifiedBOT} is true:
+			make embed:
+				set {_color} to java color from rgb 0, 98, 255
+				set the color of the embed to {_color}
+				set title of the embed to "Oops, we ran into an error."
+				set description of the embed to "You have already verified yourself!"
+				set the footer of embed to footer with text ""
+			reply with the last made embed
+			stop
+		else:
+			stop
+
+on member join guild:
+	set {ywf_main.%event-user%.verifiedBOT} to false
+	set {verifyNumBOT.%event-user%} to a random integer between 16873 and 93846
+	make embed:
+		set {_color} to java color from rgb 0, 98, 255
+		set the color of the embed to {_color}
+		set title of the embed to "Welcome to Young, Wild and Free!"
+		set description of the embed to "%nl%Hello! You are required to reply with the numbers below before entering the server.%nl%%nl%```yml%nl%%{verifyNumBOT.%event-user%}%```%nl%**Why?**%nl%This is to protect our community against targeted attacks using automated user accounts."
+		set the footer of embed to footer with text "Having trouble? Send a DM to online staff!"
+	send the last made embed to event-member with event-bot
+
+on guild message received seen by "YoungWildFree":
+	if event-channel is channel with id "765898422858678292":
+		wait 2 seconds
+		delete event-message

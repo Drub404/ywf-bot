@@ -1,0 +1,102 @@
+options:
+	botToken: "NzkzMjE0MjQwNDM3NDM2NDU3.X-pAVA.7xmkOhg7ppvtZ5_vNVX__DrJou0"
+	botPrefix: "."
+	icon: "https://cdn.discordapp.com/attachments/762037941051981861/766988284370092042/ywf_moshed_gif_logo.gif"
+
+on skript load:
+	create vixio bot:
+		enable the guild members intent
+		wait 1 second
+		login to {@botToken} with name "YoungWildFree"
+
+discord command shrug:
+	prefixes: {@botPrefix}
+	trigger:
+		delete event-message
+		reply with "lol" and store it in {_shrug}
+		wait 2 seconds
+		edit {_shrug} to show "¯\_(ツ)_/¯"
+		stop
+
+discord command invite:
+	prefixes: {@botPrefix}
+	aliases: inv
+	trigger:
+		reply with "discord.gg/s2GH5W4"
+		stop
+
+discord command frag:
+	prefixes: {@botPrefix}
+	trigger:
+		make embed:
+			set color of embed to pink
+			set title of the embed to "Fragmenting is intentionally shortening your messages so you can increase your xp count."
+			set the footer of embed to footer with text "Fragmenting is seen as ""spam"" and will get you muted" and icon {@icon}
+		reply with last made embed
+
+discord command quote [<text>]:
+	prefixes: {@botPrefix}
+	trigger:
+		if arg-1 isn't set:
+			make embed:
+				set color of embed to red
+				set title of the embed to "Oops, we ran into an error."
+				set description of the embed to "Please specify something that you would like me to quote."
+				set the footer of embed to footer with text "Advertising or tagging everyone/here is disabled!" and icon {@icon}
+			reply with last made embed
+		else if event-member has role named "Creator":
+			delete event-message
+			reply with "*""%arg-1%""%nl%~ %event-member%*"
+		else if arg-1 contains "@everyone", "@here", ".com", ".net", "join", "free" or "link":
+			delete event-message
+			make embed:
+				set color of embed to red
+				set title of the embed to "Oops, we ran into an error."
+				set description of the embed to "Please don't advertise or attempt to ping here or everyone through this command!"
+			reply with last made embed
+		else:
+			delete event-message
+			reply with "*""%arg-1%""%nl%~ %event-member%*"
+
+discord command coinflip:
+	prefixes: {@botPrefix}
+	aliases: cf
+	trigger:
+		set {_coinflip} to random element out of "The coin landed on **heads**!" and "The coin landed on **tails**!" and "I accidentally threw the coin into the water.. whoops."
+		reply with "%{_coinflip}%"
+
+discord command tripsitters:
+	prefixes: {@botPrefix}
+	aliases: ts, tripsitter
+	trigger:
+		loop discord members of event-guild:
+			loop-member has role named "Trip Sitter"
+			add loop-member to {_onlineTS::*}
+		make embed:
+			set {_color} to java color from rgb 255, 85, 85
+			set the colour of the embed to {_color}
+			set title of the embed to "%size of {_onlineTS::*}% trip sitters:"
+			set description of the embed to ":heart: %{_onlineTS::*}%"
+		reply with the last made embed
+
+discord command staff:
+	prefixes: {@botPrefix}
+	aliases: mods, mod, moderator, moderators
+	trigger:
+		loop discord members of event-guild:
+			loop-member has role named "Mod"
+			add loop-member to {_onlineStaff::*}
+		make embed:
+			set {_color} to java color from rgb 43.5, 66.3, 87.1
+			set the color of the embed to {_color}
+			set title of the embed to "%size of {_onlineStaff::*}% staff members:"
+			set description of the embed to ":hammer_pick: %{_onlineStaff::*}%"
+		reply with last made embed
+
+discord command welcome:
+	prefixes: {@botPrefix}
+	trigger:
+		set {_welcomer} to mention tag of role named "Welcome"
+		#set {_welcomeMessage} to random element out of "ONE OF US! ONE OF US! ONE OF US!" and "You didn't find YWF, YWF found you." and "It's not your fault.. IT'S NOT YOUR FAULT!!" and "You have finally made it to the mothership, we have been expecting you." and "Can you hum while holding your nose?" and "Did you know Mars' population entirely consists of robots?" and "Did you know that if a piece of paper were folded 42 times, it would reach to the moon?" and "Don't expect me to give out random shrooms, go pick them yourself!" and "APES! TOGETHER! STRONG!" and "These tabs ain't shit, oh wait.. holy shit!" and "Keep this server quiet for my rehab center, okay?" and "Plant shrooms instead of landmines!" and "You have arrived from a dimension that no longer exists."
+		set {_welcomeMessage} to "Enjoy your stay! Be sure to read our rules to avoid misunderstandings!"
+		reply with "%{_welcomer}% %event-user%! %{_welcomeMessage}%"
